@@ -109,7 +109,7 @@ def unified_weighted_coral_alignment(source, target, target_logits):
     entropy = -torch.sum(probs * torch.log(probs + 1e-5), dim=1)
 
     w_t = 1.0 + torch.exp(-entropy / T)
-    w_t = w_t.detach() / torch.sum(w_t.detach())
+    w_t = w_t / torch.sum(w_t)
 
     n_s = source.size(0)
     w_s = torch.ones(n_s).to(device) / n_s
@@ -401,4 +401,5 @@ if __name__ == "__main__":
     results_df.to_csv(save_path, index=False, encoding='utf-8-sig')
     print(f"\n所有指标已保存至: {save_path}")
     print("\n=== 所有受试者指标汇总 ===")
+
     print(results_df.round(3))

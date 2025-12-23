@@ -16,9 +16,9 @@ import torch
 from sklearn.metrics import precision_score, recall_score, f1_score  # 也可手动实现，见下文
 # ===================== 配置区域 =====================
 pretrained_dir = r"E:\CODE\IWJDA\ODG\model_save_32"
-# pretrained_dir = r"E:\HLW\CODE\1208IWJDA\目标域迁移测试\ori_model"
+
 pretrained_timestamp = "2025_160946"
-# data_dir = r"E:\002HLW\code\IWJDA\dataset"
+
 data_dir = r"E:\Cross_subject\data"
 
 torch.manual_seed(42)#42
@@ -474,3 +474,4 @@ if __name__ == "__main__":
 
 
     df2.to_excel(save_path, index=False)
+

@@ -119,7 +119,7 @@ def unified_weighted_coral_alignment(source, target, target_logits):
     entropy = -torch.sum(probs * torch.log(probs + 1e-5), dim=1)
 
     w_t = 1.0 + torch.exp(-entropy / T)
-    w_t = w_t.detach() / torch.sum(w_t.detach())  # 归一化
+    w_t = w_t / torch.sum(w_t)  # 归一化
 
     n_s = source.size(0)
     w_s = torch.ones(n_s).to(device) / n_s
@@ -164,10 +164,7 @@ def unified_weighted_coral_alignment(source, target, target_logits):
 #     # 均值 Loss (一阶矩)
 #     # loss_mean = torch.mean((mu_s - mu_t) ** 2)
 #
-#     # 3. 计算加权协方差 (CORAL, 二阶矩)
-#     # 中心化数据 (利用刚才算出的 mu)
-#     source_cent = source - mu_s
-#     target_cent = target - mu_t
+
 #
 #     def _calc_cov(feat, w):
 #         mu = torch.matmul(feat.t(), w.unsqueeze(1)).t()
@@ -474,5 +471,6 @@ if __name__ == "__main__":
     save_path = os.path.join(pretrained_dir, f"load_ori_iwjda{datetime.now().strftime('%H%M%S')}.xlsx")
 
     print(acc_a)
+
 
     df2.to_excel(save_path, index=False)

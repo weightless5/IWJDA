@@ -49,7 +49,7 @@ class MCADNNFeatureExtractor(nn.Module):
         self.hidden_channels = hidden_channels
         self.bottleneck_dim = bottleneck_dim  # 输出维度Z=64
 
-        # 多尺度卷积层（对应论文ResNet-50的特征提取逻辑，🔶1-98）
+        # 多尺度卷积层
         self.layer1 = self._make_layer(MACNNBlock, block_lay_num[0], self.hidden_channels)
         self.max_pool1 = nn.MaxPool1d(kernel_size=3, stride=2, padding=1)
         self.layer2 = self._make_layer(MACNNBlock, block_lay_num[1], self.hidden_channels * 2)
@@ -122,4 +122,5 @@ class DomainClassifier(nn.Module):
         self.fc = nn.Linear(feat_dim, num_domains)
 
     def forward(self, f_aux):
+
         return self.fc(f_aux)
